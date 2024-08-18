@@ -5,7 +5,10 @@ A complete local authentication and authorization suite for Go.
 Feedback is welcome :)
 - [x] Create repo
 - [x] Make todo list
-- [ ] In memory features
- - [ ] Automated testing
+- [x] In memory features
+- [x] Automated testing
 - [ ] Persistent database
 - [ ] Rest API
+
+## Wiki
+Check the Github wiki page for usage
