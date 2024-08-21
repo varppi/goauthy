@@ -7,7 +7,7 @@ Feedback is welcome :)
 - [x] Make todo list
 - [x] In memory features
 - [x] Automated testing
-- [ ] Persistent database
+- [x] Persistent database
 - [ ] Rest API
 
 ## Wiki
