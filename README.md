@@ -8,7 +8,7 @@ Feedback is welcome :)
 - [x] In memory features
 - [x] Automated testing
 - [x] Persistent database
-- [ ] Rest API
+- [x] Rest API
 
 ## Wiki
 Check the Github wiki page for usage

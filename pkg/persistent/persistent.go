@@ -9,6 +9,7 @@ import (
 
 	"github.com/R00tendo/goauthy/internal/utils"
 	"github.com/R00tendo/goauthy/pkg/constants"
+	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 	_ "github.com/mattn/go-sqlite3"
 	"golang.org/x/crypto/bcrypt"
@@ -283,4 +284,113 @@ func (store *store) Close() error {
 	}
 	store = nil
 	return nil
+}
+
+type RestSettings struct {
+	Listener string
+	Store    *store
+	Debug    bool
+	Logger   *log.Logger
+}
+
+// Rest api args(persistent.RestSettings)
+func StartRest(settings *RestSettings) error {
+	app := fiber.New(fiber.Config{ServerHeader: "GoAuthy"})
+
+	app.Post("/add", func(c *fiber.Ctx) error {
+		errHandle := func(err error) {
+			if settings.Debug {
+				settings.Logger.Println(err.Error())
+				c.Status(500).Send([]byte(err.Error()))
+			} else {
+				c.Send([]byte(""))
+			}
+		}
+
+		payload := &struct {
+			Username string `json:"username"`
+			Password string `json:"password"`
+			Access   int    `json:"access"`
+		}{}
+		err := c.BodyParser(payload)
+		if err != nil {
+			errHandle(err)
+			return err
+		}
+
+		err = settings.Store.Add(payload.Username, payload.Password, payload.Access)
+		if err != nil {
+			errHandle(err)
+			return err
+		}
+
+		return c.JSON(map[string]string{
+			"status": "success",
+		})
+	})
+
+	app.Post("/delete", func(c *fiber.Ctx) error {
+		errHandle := func(err error) {
+			if settings.Debug {
+				settings.Logger.Println(err.Error())
+				c.Status(500).Send([]byte(err.Error()))
+			} else {
+				c.Send([]byte(""))
+			}
+		}
+
+		payload := &struct {
+			Username string `json:"username"`
+			Password string `json:"password"`
+		}{}
+		err := c.BodyParser(payload)
+		if err != nil {
+			errHandle(err)
+			return err
+		}
+		user, err := settings.Store.Login(payload.Username, payload.Password)
+		if err != nil {
+			errHandle(err)
+			return err
+		}
+		user.Delete()
+
+		return c.JSON(map[string]string{
+			"status": "success",
+		})
+	})
+
+	app.Post("/login", func(c *fiber.Ctx) error {
+		errHandle := func(err error) {
+			if settings.Debug {
+				settings.Logger.Println(err.Error())
+				c.Status(500).Send([]byte(err.Error()))
+			} else {
+				c.Send([]byte(""))
+			}
+		}
+
+		payload := &struct {
+			Username string `json:"username"`
+			Password string `json:"password"`
+		}{}
+		err := c.BodyParser(payload)
+		if err != nil {
+			errHandle(err)
+			return err
+		}
+		user, err := settings.Store.Login(payload.Username, payload.Password)
+		if err != nil {
+			return c.Status(401).JSON(map[string]string{
+				"status": "invalid credentials",
+			})
+		}
+		user.LogOut()
+
+		return c.JSON(map[string]string{
+			"status": "success",
+		})
+	})
+
+	return app.Listen(settings.Listener)
 }
