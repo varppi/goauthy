@@ -3,8 +3,8 @@ package memory
 import (
 	"sync"
 
-	"github.com/R00tendo/goauthy/internal/utils"
-	"github.com/R00tendo/goauthy/pkg/constants"
+	"github.com/Varppi/goauthy/internal/utils"
+	"github.com/Varppi/goauthy/pkg/constants"
 )
 
 type store struct { //Single source of truth

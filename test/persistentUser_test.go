@@ -6,8 +6,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/R00tendo/goauthy/pkg/constants"
-	"github.com/R00tendo/goauthy/pkg/persistent"
+	"github.com/Varppi/goauthy/pkg/constants"
+	"github.com/Varppi/goauthy/pkg/persistent"
 )
 
 func TestPersistentFeatures(t *testing.T) {

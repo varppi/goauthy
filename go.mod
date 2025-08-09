@@ -1,4 +1,4 @@
-module github.com/R00tendo/goauthy
+module github.com/Varppi/goauthy
 
 go 1.22.1
 

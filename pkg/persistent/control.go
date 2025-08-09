@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"sync"
 
-	"github.com/R00tendo/goauthy/internal/utils"
-	"github.com/R00tendo/goauthy/pkg/constants"
+	"github.com/Varppi/goauthy/internal/utils"
+	"github.com/Varppi/goauthy/pkg/constants"
 	_ "github.com/mattn/go-sqlite3"
 )
 

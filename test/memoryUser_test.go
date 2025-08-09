@@ -5,8 +5,8 @@ import (
 	"log"
 	"testing"
 
-	"github.com/R00tendo/goauthy/pkg/constants"
-	"github.com/R00tendo/goauthy/pkg/memory"
+	"github.com/Varppi/goauthy/pkg/constants"
+	"github.com/Varppi/goauthy/pkg/memory"
 )
 
 func TestInMemoryFeatures(t *testing.T) {
